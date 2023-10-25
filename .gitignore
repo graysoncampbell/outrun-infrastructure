@@ -206,3 +206,4 @@ src/js/out/DebugPath.h
 make-dev-stats.csv
 .uuid
 tsconfig.tsbuildinfo
+variables.tf
