@@ -1,0 +1,16 @@
+{
+  "name": "outrun-infrastructure",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "destroy": "read Environment && terraform destroy",
+    "apply": "read Environment && terraform apply",
+    "plan": "terraform plan"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
