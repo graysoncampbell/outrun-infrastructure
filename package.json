@@ -3,9 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "destroy": "read Environment && terraform destroy",
-    "apply": "read Environment && terraform apply",
-    "plan": "terraform plan"
+    "destroy": "read Environment && op inject -i variables.tf.tpl -o variables.tf && terraform destroy",
+    "apply": "read Environment && op inject -i variables.tf.tpl -o variables.tf && terraform apply",
+    "plan": "read Environment && op inject -i variables.tf.tpl -o variables.tf && terraform plan"
   },
   "devDependencies": {
     "bun-types": "latest"
