@@ -1,7 +1,7 @@
 # outrun-infrastructure
 
 ## Overview
-This is a terraform project, that houses all the instructions for the outrun infrastructure.
+These are the configuration files, that houses all the instructions for the outrun infrastructure.
 
 ## Outline
 main.tf > 
