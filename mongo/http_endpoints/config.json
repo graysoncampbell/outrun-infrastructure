@@ -1,7 +1,7 @@
 [
     {
         "route": "/myFunction",
-        "http_method": "POST",
+        "http_method": "GET",
         "function_name": "myFunction",
         "validation_method": "NO_VALIDATION",
         "respond_result": true,
