@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "setup": "op inject -i variables.tf.tpl -o variables.tf && terraform init",
+    "setup": "op inject -i variables.tf.tpl -o variables.tf && terraform init $$",
     "destroy": "terraform destroy",
     "apply": "terraform apply",
     "plan": "terraform plan"
