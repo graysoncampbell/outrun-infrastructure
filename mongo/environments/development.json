@@ -1,3 +1,5 @@
 {
-    "values": {}
+    "values": {
+        "clustername": "dev-cluster-us-east-01"
+    }
 }
