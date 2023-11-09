@@ -1,0 +1,9 @@
+{
+    "app_id": "dev-services-us-east-01-nphxv",
+    "config_version": 20210101,
+    "name": "dev-services-us-east-01",
+    "location": "US-VA",
+    "provider_region": "aws-us-east-1",
+    "deployment_model": "LOCAL",
+    "environment": "development"
+}
