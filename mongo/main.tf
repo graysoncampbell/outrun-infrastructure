@@ -26,43 +26,56 @@ terraform {
   }
  }
 
+locals {
+  env="${terraform.workspace}"
+
+  instances = {
+    dev   = "M0"
+    prod  = "M0"
+  }
+  data_centers = {
+    dev   = "CENTRAL_US"
+    prod  = "CENTRAL_US"
+  }
+  data_centers_names = {
+    dev   = "central-us"
+    prod  = "central-us"
+  }
+
+  instance_type="${lookup(local.instances,local.env)}"
+  data_center="${lookup(local.data_centers,local.env)}"
+  data_center_name="${lookup(local.data_centers_names,local.env)}"
+}
+
 provider "mongodbatlas" {
   public_key  = var.mongodb_atlas_api_pub_key
   private_key = var.mongodb_atlas_api_pri_key
 }
 
 #
-# Create a Project
-#
-# resource "mongodbatlas_project" "my_project" {
-#   name   = "Outrun Dev"
-#   org_id = var.mongodb_atlas_org_id
-# }
-
-#
 # Create a Shared Tier Cluster
 #
-resource "mongodbatlas_cluster" "dev_tenants" {
+resource "mongodbatlas_cluster" "app_tenants" {
   project_id              = var.mongodb_atlas_project_id
-  name                    = "dev-cluster-us-east-01"
+  name                    = "${terraform.workspace}-cluster-${local.data_center_name}"
 
   # Provider Settings "block"
   provider_name = "TENANT"
 
   # options: AWS AZURE GCP
-  backing_provider_name = "AWS"
+  backing_provider_name = "GCP"
 
   # options: M2/M5 atlas regions per cloud provider
   # GCP - CENTRAL_US SOUTH_AMERICA_EAST_1 WESTERN_EUROPE EASTERN_ASIA_PACIFIC NORTHEASTERN_ASIA_PACIFIC ASIA_SOUTH_1
   # AZURE - US_EAST_2 US_WEST CANADA_CENTRAL EUROPE_NORTH
   # AWS - US_EAST_1 US_WEST_2 EU_WEST_1 EU_CENTRAL_1 AP_SOUTH_1 AP_SOUTHEAST_1 AP_SOUTHEAST_2
-  provider_region_name = "US_EAST_1"
+  provider_region_name = "${local.data_center}"
 
   # options: M2 M5
-  provider_instance_size_name = "M0"
+  provider_instance_size_name = "${local.instance_type}"
 
   # Will not change till new version of MongoDB but must be included
-  mongo_db_major_version = "6.0"
+  mongo_db_major_version = "7.0"
   auto_scaling_disk_gb_enabled = "false"
 }
 
@@ -96,5 +109,5 @@ resource "mongodbatlas_project_ip_access_list" "my_ipaddress" {
 
 # Use terraform output to display connection strings.
 output "standard" {
-    value = mongodbatlas_cluster.dev_tenants.connection_strings[0].standard
+    value = mongodbatlas_cluster.app_tenants.connection_strings[0].standard
 }
